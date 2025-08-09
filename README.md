@@ -1,4 +1,4 @@
-# Blazor Web Development Project – Event Management
+  # Blazor Front-End Development Project – Event Management
 
 This project was created as part of a **Blazor for Front-End Development** course.  
 The goal was to build a simple event management web app using **Blazor WebAssembly** while leveraging **Microsoft Copilot** to speed up development, follow best practices, and experiment with AI-assisted coding.
