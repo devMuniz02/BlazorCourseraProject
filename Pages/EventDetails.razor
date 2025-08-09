@@ -1,0 +1,42 @@
+@page "/events/{eventName}"
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>Event Details</PageTitle>
+
+<h1>Event Details</h1>
+
+@if (Event != null)
+{
+    <div class="event-details">
+        <h2>@Event.Name</h2>
+        <p><strong>Date:</strong> @Event.Date.ToLongDateString()</p>
+        <p><strong>Location:</strong> @Event.Location</p>
+    <NavLink class="btn btn-primary" href="@( $"/register/{Event.Name}" )">Register</NavLink>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>Event not found. Please check the event name or <a href="/events">return to the event list</a>.</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? eventName { get; set; }
+
+    public EventInfo? Event { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Mock data for demonstration
+        var events = new List<EventInfo>
+        {
+            new EventInfo { Name = "Tech Conference 2025", Date = new DateTime(2025, 9, 15), Location = "New York" },
+            new EventInfo { Name = "Marketing Summit", Date = new DateTime(2024, 10, 5), Location = "Chicago" },
+            new EventInfo { Name = "Startup Expo", Date = new DateTime(2025, 11, 20), Location = "San Francisco" }
+        };
+        Event = events.FirstOrDefault(e => e.Name == eventName);
+    }
+}

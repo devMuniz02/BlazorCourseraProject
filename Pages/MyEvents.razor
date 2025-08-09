@@ -1,0 +1,50 @@
+@page "/my-events"
+@inject CourseraBlazor.Services.UserSessionService UserSession
+
+<PageTitle>My Events</PageTitle>
+
+<h1>My Registered Events</h1>
+
+@if (string.IsNullOrWhiteSpace(UserSession.UserName))
+{
+    <div class="alert alert-info">You have not registered for any events yet.</div>
+}
+else
+{
+    <p><strong>Name:</strong> @UserSession.UserName</p>
+    <p><strong>Email:</strong> @UserSession.UserEmail</p>
+    <h3>Events:</h3>
+    @if (UserSession.RegisteredEvents.Count == 0)
+    {
+        <p>No events registered.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var ev in UserSession.RegisteredEvents)
+            {
+                <li>
+                    @ev
+                    @if (UserSession.AttendedEvents.Contains(ev))
+                    {
+                        <span class="badge bg-success ms-2">Attended</span>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-outline-primary ms-2" @onclick="() => MarkAttendance(ev)">Mark Attendance</button>
+                    }
+                </li>
+            }
+        </ul>
+    }
+}
+
+<NavLink class="btn btn-secondary" href="/events">Back to Events</NavLink>
+
+@code {
+    private void MarkAttendance(string eventName)
+    {
+        UserSession.MarkAttendance(eventName);
+        StateHasChanged();
+    }
+}

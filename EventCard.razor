@@ -1,0 +1,25 @@
+@* EventCard.razor *@
+@using System
+@using CourseraBlazor
+@* Strongly-typed event card for data binding *@
+@if (Event == null || string.IsNullOrWhiteSpace(Event.Name))
+{
+    <div class="event-card invalid">
+        <p>Invalid event data.</p>
+    </div>
+}
+else
+{
+    <div class="event-card">
+        <h3>
+            <a href="/events/@Event.Name">@Event.Name</a>
+        </h3>
+        <p><strong>Date:</strong> @(Event.Date != default ? Event.Date.ToShortDateString() : "N/A")</p>
+        <p><strong>Location:</strong> @(!string.IsNullOrWhiteSpace(Event.Location) ? Event.Location : "N/A")</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public EventInfo? Event { get; set; }
+}
